@@ -11,8 +11,13 @@ def parse_arguments():
     return parser.parse_args()
     
 def main():
-    c_an.launch_analysis('current_mps.csv')
-    x_an.launch_analysis('SyceronBrut.xml')
+    args = parse_arguments()
+    # - import pdb; pdb.set_trace() for debug
+
+    if args.extension == 'xml':
+        x_an.launch_analysis('SyceronBrut.xml')
+    elif args.extension == 'csv':
+        c_an.launch_analysis('current_mps.csv')
 
 if __name__ == "__main__":
     main()
