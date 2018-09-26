@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*
+
 """Classes du jeu de Labyrinthe Donkey Kong"""
 
 import pygame
@@ -5,7 +8,7 @@ from pygame.locals import *
 from constantes import *
 
 class Niveau:
-	#Classe permettant de créer un niveau
+	#Classe permettant de creer un niveau
 	def __init__(self, fichier):
 		self.fichier = fichier
 		self.structure = 0
@@ -22,7 +25,7 @@ class Niveau:
 				for sprite in ligne:
 					#On ignore les "\n" de fin de ligne
 					if sprite != '\n':
-						#On ajoute le sprite à la liste de la ligne
+						#On ajoute le sprite a la liste de la ligne
 						ligne_niveau.append(sprite)
 				#On ajoute la ligne à la liste du niveau
 				structure_niveau.append(ligne_niveau)

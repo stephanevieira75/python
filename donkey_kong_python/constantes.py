@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*
 """Constantes du jeu de Labyrinthe Donkey Kong"""
 
 #Paramètres de la fenêtre

@@ -15,17 +15,23 @@ from pygame.locals import *
 from classes import *
 from constantes import *
 
+
 pygame.init()
 
 #Ouverture de la fenêtre Pygame (carré : largeur = hauteur)
-fenetre = pygame.display.set_mode((cote_fenetre, cote_fenetre))
+fenetre = pygame.display.set_mode((cote_fenetre, cote_fenetre), RESIZABLE)
 #Icone
 icone = pygame.image.load(image_icone)
 pygame.display.set_icon(icone)
 #Titre
 pygame.display.set_caption(titre_fenetre)
+#Son
+son_choix = pygame.mixer.Sound("sound/choix.wav")
+son_back = pygame.mixer.Sound("sound/bacmusic.wav")
+son_win = pygame.mixer.Sound("sound/victory.wav")
 
 
+son_choix.play()
 #BOUCLE PRINCIPALE
 continuer = 1
 while continuer:
@@ -47,7 +53,9 @@ while continuer:
 		pygame.time.Clock().tick(30)
 
 		for event in pygame.event.get():
-
+			if event.type == VIDEORESIZE:
+				if event.w > 500 or event.h > 500:
+					continuer = 0
 			#Si l'utilisateur quitte, on met les variables
 			#de boucle à 0 pour n'en parcourir aucune et fermer
 			if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
@@ -69,6 +77,7 @@ while continuer:
 
 
 
+
 	#on vérifie que le joueur a bien fait un choix de niveau
 	#pour ne pas charger s'il quitte
 	if choix != 0:
@@ -84,15 +93,12 @@ while continuer:
 		dk = Perso("img/dk_droite.png", "img/dk_gauche.png",
 		"img/dk_haut.png", "img/dk_bas.png", niveau)
 
-
 	#BOUCLE DE JEU
 	while continuer_jeu:
 
 		#Limitation de vitesse de la boucle
 		pygame.time.Clock().tick(30)
-
 		for event in pygame.event.get():
-
 			#Si l'utilisateur quitte, on met la variable qui continue le jeu
 			#ET la variable générale à 0 pour fermer la fenêtre
 			if event.type == QUIT:
@@ -107,12 +113,17 @@ while continuer:
 				#Touches de déplacement de Donkey Kong
 				elif event.key == K_RIGHT:
 					dk.deplacer('droite')
+					son_back.play()
 				elif event.key == K_LEFT:
 					dk.deplacer('gauche')
+					son_back.play()
 				elif event.key == K_UP:
 					dk.deplacer('haut')
+					son_back.play()
 				elif event.key == K_DOWN:
 					dk.deplacer('bas')
+					son_back.play()
+				son_back.fadeout(1000)
 
 		#Affichages aux nouvelles positions
 		fenetre.blit(fond, (0,0))
@@ -122,4 +133,5 @@ while continuer:
 
 		#Victoire -> Retour à l'accueil
 		if niveau.structure[dk.case_y][dk.case_x] == 'a':
+			son_choix.play()
 			continuer_jeu = 0
